@@ -1,0 +1,13 @@
+### Lingk Recipe Configuration ###
+
+connectors:
+  name: sfmc
+  type: salesforce
+  properties:
+    clientId: CLIENT_ID
+    clientSecret: CLIENT SECRET
+    stack: YOUR MARKETING CLOUD STACK
+    origin: https://TENANT_SPECIFIC_ENDPOINTS.rest.marketingcloudapis.com #REST
+    authOrigin: https://TENANT_SPECIFIC_ENDPOINTS.auth.marketingcloudapis.com #AUTH
+    soapOrigin: https://TENANT_SPECIFIC_ENDPOINTS.soap.marketingcloudapis.com #SOAP
+    mcAccountId: <<YOUR MID>>

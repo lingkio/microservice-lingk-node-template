@@ -1,0 +1,54 @@
+service: BigIdeaExample # The format is [YourTenant][ServiceName]
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage,'dev'}
+  region: us-east-1
+  deploymentBucket: microservice-lambda-deployer
+  stackName: ${self:custom.stackname.${self:provider.stage}}
+ # Environment Variables
+  environment:
+    CLIENT_ID:  ${file(lingk.yml):connectors.sfmc.properties.clientId}
+    CLIENT_SECRET:  ${file(lingk.yml):connectors.sfmc.properties.clientSecret}
+    STACK:  ${file(lingk.yml):connectors.sfmc.properties.stack}
+    ORIGIN:  ${file(lingk.yml):connectors.sfmc.properties.origin}
+    AUTH_ORIGIN:  ${file(lingk.yml):connectors.sfmc.properties.authOrigin}
+    SOAP_ORIGIN:  ${file(lingk.yml):connectors.sfmc.properties.soapOrigin}
+    MID:  ${file(lingk.yml):connectors.sfmc.properties.mid}
+
+# Custom Variables
+custom:
+  stages:
+    - dev
+  stackname:
+    dev: bigidea-example-dev #format: tenant-stackname-env
+    prod: bigidea-example-prod
+
+functions:
+  api:
+    timeout: '60'
+    handler: lambda.handler
+ #   environment:
+ #     LAMBDA_NET_SERIALIZER_DEBUG: 'true'
+    events:
+    - http:
+        timeout: '60'
+        path: "/{proxy+}"
+        memory: '128'
+        method: ANY
+ #       authorizer: auth
+auth:
+  handler: LingkAPI::LingkAuthorizer.Authorize::AuthorizeHandler # contact Lingk to have your IP address added to authorizer for local testing
+  codeUri: ''
+  memorySize: 256
+  timeout: 30
+  policies:
+  - AWSLambdaBasicExecutionRole
+  events:
+  - PutResource:
+      Type: Api
+      Properties:
+        Path: "/"
+        Method: ANY
+plugins:
+- serverless-offline

@@ -1,0 +1,6 @@
+{
+  "resource": "/",
+  "path": "/emailUnsubEvents",
+  "httpMethod": "GET"
+  //  etc. //
+}
