@@ -6,6 +6,14 @@ provider:
   region: us-east-1
   deploymentBucket: microservice-lambda-deployer
   stackName: ${self:custom.stackname.${self:provider.stage}}
+  logRetentionInDays: 5
+  vpc:
+    securityGroupIds:
+      - sg-06265d29483d0c03c
+    subnetIds:
+      - subnet-0b5fbab6ae21e1c99
+      - subnet-0927dfb87e169ab34
+      - subnet-04ee664f857ae8cd6
  # Environment Variables
   environment:
     CLIENT_ID:  ${file(lingk.yml):connectors.sfmc.properties.clientId}

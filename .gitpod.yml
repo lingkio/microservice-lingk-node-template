@@ -6,6 +6,7 @@ tasks:
 - init: pip3 install awscli --upgrade --user
 - init: npm install express --save
 - init: npm install aws-serverless-express
-- init: npm install serverless -g
+- init: npm install serverless
+- init: npm install --save body-parser
 # -init: npm install connector-module-name
 # Note: package.json also needs to be updaed
